@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orchardsign.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.orchardsign.entity.Admin"  >
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="uName" jdbcType="VARCHAR" property="uname" />
+    <result column="uPwd" jdbcType="VARCHAR" property="upwd" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="isEnable" jdbcType="INTEGER" property="isenable"  />
+    <result column="loginTime" jdbcType="TIMESTAMP" property="logintime"  typeHandler="com.orchardsign.util.EmptyStringIfNull"  />
+    <result column="loginIp" jdbcType="VARCHAR" property="loginip" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
+  </resultMap>
+  <resultMap id="BaseResultMapV" type="com.orchardsign.entity.Vadmin">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="uName" jdbcType="VARCHAR" property="uname" />
+    <result column="uPwd" jdbcType="VARCHAR" property="upwd" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="isEnable" jdbcType="INTEGER" property="isenable" />
+    <result column="loginTime" jdbcType="TIMESTAMP" property="logintime" />
+    <result column="loginIp" jdbcType="VARCHAR" property="loginip" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
+    <result column="groupName" jdbcType="VARCHAR" property="groupname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, permission, nickname, uName, uPwd, createTime, isEnable, loginTime, loginIp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findByName" parameterType="com.orchardsign.entity.Admin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_admin
+    where uName = #{uName,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.orchardsign.entity.Admin">
+    insert into tb_admin (id, permission, nickname, 
+      uName, uPwd, createTime, 
+      isEnable, loginTime, loginIp
+      )
+    values (#{id,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{uname,jdbcType=VARCHAR}, #{upwd,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{isenable,jdbcType=INTEGER}, #{logintime,jdbcType=TIMESTAMP}, #{loginip,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.orchardsign.entity.Admin">
+    insert into tb_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="uname != null">
+        uName,
+      </if>
+      <if test="upwd != null">
+        uPwd,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="isenable != null">
+        isEnable,
+      </if>
+      <if test="logintime != null">
+        loginTime,
+      </if>
+      <if test="loginip != null">
+        loginIp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upwd != null">
+        #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        #{isenable,jdbcType=INTEGER},
+      </if>
+      <if test="logintime != null">
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginip != null">
+        #{loginip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.orchardsign.entity.Admin">
+    update tb_admin
+    <set>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uName = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upwd != null">
+        uPwd = #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isenable != null">
+        isEnable = #{isenable,jdbcType=INTEGER},
+      </if>
+      <if test="logintime != null">
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginip != null">
+        loginIp = #{loginip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.orchardsign.entity.Admin">
+    update tb_admin
+    set permission = #{permission,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      uName = #{uname,jdbcType=VARCHAR},
+      uPwd = #{upwd,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isEnable = #{isenable,jdbcType=INTEGER},
+      loginTime = #{logintime,jdbcType=TIMESTAMP},
+      loginIp = #{loginip,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="adminLogin" parameterType="com.orchardsign.entity.Vadmin" resultMap="BaseResultMapV">
+    SELECT *
+    FROM v_admin AS v
+    WHERE  uName = #{uName} AND   uPwd = #{uPwd}
+
+  </select>
+
+</mapper>
