@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,13 +58,21 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String adminLogin(@ModelAttribute("adminForm") @Valid FormAdminLogin admin, BindingResult result, Model model){
+    public String adminLogin(@ModelAttribute("adminForm") @Valid FormAdminLogin admin, BindingResult result, Model model,HttpServletRequest request){
 
         if (result.hasErrors()) {
             List<ObjectError> error = result.getAllErrors();
             model.addAttribute("msg",error.get(0).getDefaultMessage());
             return "admin/login";
         }
+
+        HttpSession session = request.getSession();
+        String sessionCode = (String) session.getAttribute("code");
+        if (!StringUtils.equalsIgnoreCase(admin.getCode(), sessionCode)) {  //忽略验证码大小写
+            model.addAttribute("msg","验证码错误");
+            return "admin/login";
+        }
+
         UtilJson utilJson =  adminService.adminLogin(admin.getUname(),admin.getUpwd());
 
         if (utilJson.getCode() == 200){
