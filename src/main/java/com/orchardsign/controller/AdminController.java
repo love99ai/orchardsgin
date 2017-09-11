@@ -1,5 +1,7 @@
 package com.orchardsign.controller;
 
+import com.orchardsign.entity.Admin;
+import com.orchardsign.entity.Vadmin;
 import com.orchardsign.entity.form.FormAdminLogin;
 import com.orchardsign.service.AdminService;
 import com.orchardsign.util.UtilJson;
@@ -57,31 +59,43 @@ public class AdminController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String adminLogin(@ModelAttribute("adminForm") @Valid FormAdminLogin admin, BindingResult result, Model model,HttpServletRequest request){
-
+    @RequestMapping(value = "/login")
+    public String adminLogin(@ModelAttribute("adminForm") @Valid FormAdminLogin admin, BindingResult result, Model model,HttpServletRequest request) throws Exception{
+        //表单验证
         if (result.hasErrors()) {
             List<ObjectError> error = result.getAllErrors();
             model.addAttribute("msg",error.get(0).getDefaultMessage());
-            return "admin/login";
+            return "redirect:/admin";
         }
-
+        //验证码验证
         HttpSession session = request.getSession();
         String sessionCode = (String) session.getAttribute("code");
         if (!StringUtils.equalsIgnoreCase(admin.getCode(), sessionCode)) {  //忽略验证码大小写
             model.addAttribute("msg","验证码错误");
-            return "admin/login";
+            return "redirect:/admin";
         }
-
+        //登录信息
         UtilJson utilJson =  adminService.adminLogin(admin.getUname(),admin.getUpwd());
-
         if (utilJson.getCode() == 200){
-            model.addAttribute("admin",utilJson.getObj());
-            return "admin/index";
+            //登录成功、、将登录信息保存到session
+            session.setAttribute("admin",utilJson.getObj());
+            return "redirect:/admin/index";
         }else {
+            //登录失败
             model.addAttribute("msg",utilJson.getMsg());
-            return "admin/login";
+            return "redirect:/admin";
         }
+    }
+    //管理员首页
+    @RequestMapping(value = "/index")
+    public String adminIndex( Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Object admin = session.getAttribute("admin");
+        if (admin == null){//登录过期
+            return "redirect:/admin";
+        }
+        model.addAttribute("admin", admin);
+        return "admin/index";
     }
 
     /**
@@ -103,6 +117,15 @@ public class AdminController {
         session.setAttribute("code", vCode.getCode());
         vCode.write(response.getOutputStream());
         return null;
+    }
+
+    @RequestMapping(value="/welcome")
+    public String welcome(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        model.addAttribute("admin", session.getAttribute("admin"));
+//        model.addAttribute("adminForm",new FormAdminLogin());
+//        logger.debug("---admin");
+        return "admin/welcome";
     }
 
 }

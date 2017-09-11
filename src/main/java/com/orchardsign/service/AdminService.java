@@ -1,6 +1,5 @@
 package com.orchardsign.service;
 
-import com.orchardsign.entity.Vadmin;
 import com.orchardsign.util.UtilJson;
 
 /**
@@ -12,7 +11,7 @@ import com.orchardsign.util.UtilJson;
 public interface AdminService {
 
 
-
+    //用户登录
     UtilJson adminLogin(String uName, String uPwd);
 
 }

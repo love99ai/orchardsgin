@@ -45,7 +45,7 @@
 		</nav>
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
-				<li>超级管理员</li>
+				<li><td th:text="${admin.groupname}"></td></li>
 				<li class="dropDown dropDown_hover">
 					<a href="#" class="dropDown_A"><td th:text="${admin.nickname}"></td> <i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
@@ -165,7 +165,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
+					<span title="我的桌面" data-href="/admin/welcome">我的桌面</span>
 					<em></em></li>
 		</ul>
 	</div>
@@ -175,7 +175,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="/admin/welcome"></iframe>
 	</div>
 </div>
 </section>
@@ -218,8 +218,8 @@ function myselfinfo(){
 		fix: false, //不固定
 		maxmin: true,
 		shade:0.4,
-		title: '查看信息',
-		content: '<div>管理员信息</div>'
+		title: '管理员信息',
+		content: '<div> <ul><li>昵称：<td th:text="${admin.nickname}"></td> </li><li>管理组：<td th:text="${admin.groupname}"></td></li> </ul> </div>'
 	});
 }
 
