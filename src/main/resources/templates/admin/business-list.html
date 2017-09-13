@@ -30,14 +30,14 @@
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;"/>
 		-
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;"/>
-		<input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="uname" name=""/>
+		<input type="text" class="input-text" style="width:250px" placeholder="请输入商家名称" id="uname" name=""/>
 		<button type="submit" class="btn btn-success" id="search" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
-				<th scope="col" colspan="9">员工列表</th>
+				<th scope="col" colspan="9">商家列表</th>
 			</tr>
 			<tr class="text-c">
 				<th width="25"><input type="checkbox" name="" value=""/></th>
@@ -67,12 +67,12 @@
 				</td>
 				<td class="td-manage"  th:if ="${vadmin.isenable==1}">
 					<a style="text-decoration:none" th:onclick="'javascript:admin_start_stop(this,'+${vadmin.id}+',0);'" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
-					<a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a title="编辑" href="javascript:;" onclick="admin_edit('编辑商户','admin-add.html','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 					<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 
 				<td class="td-manage" th:if ="${vadmin.isenable==0}">
 					<a style="text-decoration:none" th:onclick="'javascript:admin_start_stop(this,'+${vadmin.id}+',1);'" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
-					<a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a title="编辑" href="javascript:;" onclick="admin_edit('编辑商户','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 					<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 		</th:block>
@@ -101,7 +101,7 @@
 */
 /*管理员-增加*/
 function admin_add(title,url,w,h){
-	layer_show(title,url,w,h);
+	layer_show(title,"http://localhost:8080/admin/welcome",w,h);
 }
 /*管理员-删除*/
 function admin_del(obj,id){
@@ -123,7 +123,7 @@ function admin_del(obj,id){
 
 /*管理员-编辑*/
 function admin_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
+	layer_show(title,"/admin/editAdmin",w,h);
 }
 /*管理员-停用-启用*/
 function admin_start_stop(obj,id,isEnable){

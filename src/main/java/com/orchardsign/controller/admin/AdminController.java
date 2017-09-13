@@ -157,6 +157,13 @@ public class AdminController {
         return null;
     }
 
+    @RequestMapping(value="/editAdmin")
+    public String editAdmin(Admin admin){
+
+        return "admin/admin-add";
+
+    }
+
 
 
 }
