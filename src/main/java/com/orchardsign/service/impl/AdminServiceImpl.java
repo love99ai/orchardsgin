@@ -8,10 +8,12 @@ import com.orchardsign.util.UtilJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @author zhaomaohui
  * @ClassName: AdminServiceImpl
- * @Description:
+ * @Description: 管理员信息
  * @date 2017/9/7
  */
 @Service
@@ -40,5 +42,17 @@ public class AdminServiceImpl implements AdminService {
         utilJson.setObj(vadmin);
         utilJson.setMsg("登录成功");
         return utilJson;
+    }
+
+
+
+    @Override
+    public ArrayList<Vadmin> selectBusiness() {
+        return adminMapper.selectBusiness();
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Admin admin) {
+        return adminMapper.updateByPrimaryKeySelective(admin);
     }
 }

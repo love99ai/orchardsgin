@@ -1,9 +1,10 @@
-package com.orchardsign.controller;
+package com.orchardsign.controller.admin;
 
 import com.orchardsign.entity.Admin;
 import com.orchardsign.entity.Vadmin;
 import com.orchardsign.entity.form.FormAdminLogin;
 import com.orchardsign.service.AdminService;
+import com.orchardsign.service.RoleRightsService;
 import com.orchardsign.util.UtilJson;
 import com.orchardsign.util.ValidateCode;
 import org.slf4j.Logger;
@@ -39,6 +40,9 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
+    @Autowired
+    RoleRightsService roleRightsService;
 
     /**
      * 进入后台登录
@@ -90,10 +94,12 @@ public class AdminController {
     @RequestMapping(value = "/index")
     public String adminIndex( Model model,HttpServletRequest request){
         HttpSession session = request.getSession();
-        Object admin = session.getAttribute("admin");
+        Vadmin admin = (Vadmin) session.getAttribute("admin");
         if (admin == null){//登录过期
             return "redirect:/admin";
         }
+
+        model.addAttribute("roleRights",roleRightsService.selectRole(0, admin.getPermission()));
         model.addAttribute("admin", admin);
         return "admin/index";
     }
@@ -119,6 +125,7 @@ public class AdminController {
         return null;
     }
 
+    /**管理员欢迎界面**/
     @RequestMapping(value="/welcome")
     public String welcome(Model model,HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -127,5 +134,29 @@ public class AdminController {
 //        logger.debug("---admin");
         return "admin/welcome";
     }
+    /**商家列表**/
+    @RequestMapping(value="/business")
+    public String businessList(Model model,HttpServletRequest request){
+        model.addAttribute("businessList", adminService.selectBusiness());
+        return "admin/business-list";
+
+    }
+
+    /**管理员启用\禁用**/
+    @RequestMapping(value="/isEnable")
+    public String isEnable(@RequestParam("objectid") int id,@RequestParam("isEnable") int isEnable, HttpServletResponse response) throws Exception{
+        Admin admin = new Admin();
+        admin.setId(id);
+        admin.setIsenable(isEnable);
+        int result = adminService.updateByPrimaryKeySelective(admin);
+        if (result>0){
+            response.getWriter().write("success");
+        }else {
+            response.getWriter().write("fail");
+        }
+        return null;
+    }
+
+
 
 }

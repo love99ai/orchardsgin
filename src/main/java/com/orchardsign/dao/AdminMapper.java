@@ -4,6 +4,8 @@ import com.orchardsign.entity.Admin;
 import com.orchardsign.entity.Vadmin;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
+
 
 public interface AdminMapper {
     int deleteByPrimaryKey(Integer id);
@@ -20,6 +22,8 @@ public interface AdminMapper {
 
     Admin findByName(String uName);
 
-//    @Select("select * from v_admin where uName = #{uName} and uPwd = #{uPwd}")
+    /**用户登录信息**/
     Vadmin adminLogin(@Param("uName") String uName,@Param("uPwd") String uPwd);
+    /**查询商家列表**/
+    ArrayList<Vadmin>  selectBusiness();
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orchardsign.dao.RoleRightsMapper">
+  <resultMap id="BaseResultMap" type="com.orchardsign.entity.RoleRights">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rightsId" jdbcType="INTEGER" property="rightsid" />
+    <result column="roleId" jdbcType="INTEGER" property="roleid" />
+  </resultMap>
+
+
+  <resultMap id="BaseResultMapV" type="com.orchardsign.entity.VRroleRights">
+    <id column="id" jdbcType="INTEGER" property="id" />
+
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, rightsId, roleId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bt_role_rights
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bt_role_rights
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.orchardsign.entity.RoleRights">
+    insert into bt_role_rights (id, rightsId, roleId
+      )
+    values (#{id,jdbcType=INTEGER}, #{rightsid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.orchardsign.entity.RoleRights">
+    insert into bt_role_rights
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rightsid != null">
+        rightsId,
+      </if>
+      <if test="roleid != null">
+        roleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rightsid != null">
+        #{rightsid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.orchardsign.entity.RoleRights">
+    update bt_role_rights
+    <set>
+      <if test="rightsid != null">
+        rightsId = #{rightsid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        roleId = #{roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.orchardsign.entity.RoleRights">
+    update bt_role_rights
+    set rightsId = #{rightsid,jdbcType=INTEGER},
+      roleId = #{roleid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectRole" parameterType="com.orchardsign.entity.VRroleRights" resultMap="BaseResultMapV">
+    SELECT *
+    FROM v_role_rights AS v
+    WHERE  parentId = #{parentId} AND roleid = #{roleid} ORDER BY indexs
+
+  </select>
+
+
+</mapper>

@@ -5,30 +5,30 @@ import java.io.Serializable;
 
 public class Vadmin implements Serializable {
 
-  private Long id;
-  private Long permission;
+  private Integer id;
+  private Integer permission;
   private String nickname;
   private String uname;
   private String upwd;
   private java.sql.Timestamp createtime;
-  private Long isenable;
+  private Integer isenable;
   private java.sql.Timestamp logintime;
   private String loginip;
   private String groupname;
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public Long getPermission() {
+  public Integer getPermission() {
     return permission;
   }
 
-  public void setPermission(Long permission) {
+  public void setPermission(Integer permission) {
     this.permission = permission;
   }
 
@@ -64,11 +64,11 @@ public class Vadmin implements Serializable {
     this.createtime = createtime;
   }
 
-  public Long getIsenable() {
+  public Integer getIsenable() {
     return isenable;
   }
 
-  public void setIsenable(Long isenable) {
+  public void setIsenable(Integer isenable) {
     this.isenable = isenable;
   }
 

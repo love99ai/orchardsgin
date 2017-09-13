@@ -165,4 +165,11 @@
 
   </select>
 
+  <select id="selectBusiness" parameterType="com.orchardsign.entity.Vadmin" resultMap="BaseResultMapV">
+    SELECT *
+    FROM v_admin AS v
+    WHERE  permission = 2
+
+  </select>
+
 </mapper>
