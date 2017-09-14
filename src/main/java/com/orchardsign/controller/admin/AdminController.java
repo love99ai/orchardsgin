@@ -1,5 +1,6 @@
 package com.orchardsign.controller.admin;
 
+import com.google.gson.Gson;
 import com.orchardsign.entity.Admin;
 import com.orchardsign.entity.Vadmin;
 import com.orchardsign.entity.form.FormAdminLogin;
@@ -74,10 +75,10 @@ public class AdminController {
         //验证码验证
         HttpSession session = request.getSession();
         String sessionCode = (String) session.getAttribute("code");
-        if (!StringUtils.equalsIgnoreCase(admin.getCode(), sessionCode)) {  //忽略验证码大小写
-            model.addAttribute("msg","验证码错误");
-            return "redirect:/admin";
-        }
+//        if (!StringUtils.equalsIgnoreCase(admin.getCode(), sessionCode)) {  //忽略验证码大小写
+//            model.addAttribute("msg","验证码错误");
+//            return "redirect:/admin";
+//        }
         //登录信息
         UtilJson utilJson =  adminService.adminLogin(admin.getUname(),admin.getUpwd());
         if (utilJson.getCode() == 200){
@@ -157,12 +158,39 @@ public class AdminController {
         return null;
     }
 
-    @RequestMapping(value="/editAdmin")
-    public String editAdmin(Admin admin){
+    /**编辑管理员初始化**/
+    @RequestMapping(value="/editAdminInit")
+    public String editAdminInit(@RequestParam("id") int id,Model model){
+        Admin admin = adminService.selectByPrimaryKey(id);
 
-        return "admin/admin-add";
+        if (admin.getPermission()==2){
+            //商家
+            model.addAttribute("admin",adminService.selectByPrimaryKey(id));
+            return "admin/business-edit";
+        }else {
+            //管理员
+        }
+
+        return null;
 
     }
+    /**编辑管理员**/
+    @RequestMapping(value="/editAdmin")
+    public String editAdmin(@ModelAttribute("admin") Admin admin, HttpServletResponse response)throws Exception{
+
+        if (admin.getUpwd().equals("")){
+            admin.setUpwd(null);
+        }
+        int result = adminService.updateByPrimaryKeySelective(admin);
+
+        if (result>0){
+            response.getWriter().write("success");
+        }else {
+            response.getWriter().write("fail");
+        }
+        return null;
+    }
+
 
 
 

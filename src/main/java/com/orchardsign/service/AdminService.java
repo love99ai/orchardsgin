@@ -24,5 +24,8 @@ public interface AdminService {
     /**修改管理员**/
     int updateByPrimaryKeySelective(Admin admin);
 
+    /**跟进ID查询管理员**/
+    Admin selectByPrimaryKey(Integer id);
+
 
 }

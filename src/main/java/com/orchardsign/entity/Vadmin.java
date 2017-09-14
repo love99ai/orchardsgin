@@ -16,6 +16,16 @@ public class Vadmin implements Serializable {
   private String loginip;
   private String groupname;
 
+  private String phone;
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
   public Integer getId() {
     return id;
   }

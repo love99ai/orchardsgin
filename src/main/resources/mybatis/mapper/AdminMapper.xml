@@ -11,6 +11,7 @@
     <result column="isEnable" jdbcType="INTEGER" property="isenable"  />
     <result column="loginTime" jdbcType="TIMESTAMP" property="logintime"  typeHandler="com.orchardsign.util.EmptyStringIfNull"  />
     <result column="loginIp" jdbcType="VARCHAR" property="loginip" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
   </resultMap>
   <resultMap id="BaseResultMapV" type="com.orchardsign.entity.Vadmin">
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -22,10 +23,11 @@
     <result column="isEnable" jdbcType="INTEGER" property="isenable" />
     <result column="loginTime" jdbcType="TIMESTAMP" property="logintime" />
     <result column="loginIp" jdbcType="VARCHAR" property="loginip" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" typeHandler="com.orchardsign.util.EmptyStringIfNull" />
     <result column="groupName" jdbcType="VARCHAR" property="groupname" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, permission, nickname, uName, uPwd, createTime, isEnable, loginTime, loginIp
+    id, permission, nickname, uName, uPwd, createTime, isEnable, loginTime, loginIp,phone
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

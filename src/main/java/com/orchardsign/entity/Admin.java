@@ -20,6 +20,16 @@ public class Admin {
 
     private String loginip;
 
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -41,7 +51,7 @@ public class Admin {
     }
 
     public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
+        this.nickname = nickname;
     }
 
     public String getUname() {

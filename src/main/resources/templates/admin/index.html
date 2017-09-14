@@ -79,7 +79,7 @@
 			<dd>
 				<ul>
 					<th:block th:each="vRroleRights,roleStat:${roleRight.childRrole}">
-					<li><a th:attr="data-href=${vRroleRights.action}"  data-title="资讯管理" href="javascript:void(0)"><td th:text="${vRroleRights.name}">Onions</td></a></li>
+					<li><a th:attr="data-href=${vRroleRights.action},data-title=${vRroleRights.name}"  href="javascript:void(0)"><td th:text="${vRroleRights.name}">Onions</td></a></li>
 					</th:block>
 				</ul>
 			</dd>
