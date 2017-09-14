@@ -68,4 +68,11 @@
       groupMsg = #{groupmsg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_admin_group
+    where id != 2
+  </select>
 </mapper>

@@ -60,4 +60,21 @@ public class AdminServiceImpl implements AdminService {
     public Admin selectByPrimaryKey(Integer id) {
         return adminMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int insertSelective(Admin admin) {
+        return adminMapper.insertSelective(admin);
+    }
+
+    @Override
+    public int deleteFromPrimaryKey(String ids) {
+
+        String []idArr = ids.split(",");
+        int result = 0;
+        for (String id:idArr){
+            result = adminMapper.deleteByPrimaryKey( Integer.parseInt(id));
+        }
+
+        return result;
+    }
 }

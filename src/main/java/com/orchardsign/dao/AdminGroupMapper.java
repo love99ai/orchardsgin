@@ -2,6 +2,8 @@ package com.orchardsign.dao;
 
 import com.orchardsign.entity.AdminGroup;
 
+import java.util.ArrayList;
+
 public interface AdminGroupMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface AdminGroupMapper {
     int updateByPrimaryKeySelective(AdminGroup record);
 
     int updateByPrimaryKey(AdminGroup record);
+
+    ArrayList<AdminGroup> selectAll();
 }

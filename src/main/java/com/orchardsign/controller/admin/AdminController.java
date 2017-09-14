@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.orchardsign.entity.Admin;
 import com.orchardsign.entity.Vadmin;
 import com.orchardsign.entity.form.FormAdminLogin;
+import com.orchardsign.service.AdminGroupSerice;
 import com.orchardsign.service.AdminService;
 import com.orchardsign.service.RoleRightsService;
+import com.orchardsign.util.DateUtil;
 import com.orchardsign.util.UtilJson;
 import com.orchardsign.util.ValidateCode;
 import org.slf4j.Logger;
@@ -23,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -44,6 +48,9 @@ public class AdminController {
 
     @Autowired
     RoleRightsService roleRightsService;
+
+    @Autowired
+    AdminGroupSerice adminGroupSerice;
 
     /**
      * 进入后台登录
@@ -191,6 +198,54 @@ public class AdminController {
         return null;
     }
 
+    /**初始化添加管理员**/
+    @RequestMapping(value="/addAdminInit")
+    public String addAdminInit(Model model){
+
+        model.addAttribute("groups",adminGroupSerice.selectAll());
+
+        return "admin/admin-add";
+
+    }
+    /**初始化添加管理员**/
+    @RequestMapping(value="/addBusinessInit")
+    public String addBusinessInit(){
+
+        return "admin/business-add";
+
+    }
+
+    /**添加管理员、商家**/
+    @RequestMapping(value="/addAdmin")
+    public String addAdmin(@ModelAttribute("admin") Admin admin, HttpServletResponse response)throws Exception{
+
+        admin.setCreatetime(DateUtil.stampToDate(Calendar.getInstance().getTimeInMillis()));
+        admin.setIsenable(1);
+        int result = adminService.insertSelective(admin);
+
+//        Gson gson = new Gson();
+//        System.out.print(gson.toJson(admin) );
+        if (result>0){
+            response.getWriter().write("success");
+        }else {
+            response.getWriter().write("fail");
+        }
+        return null;
+    }
+
+    /**删除管理员、商家**/
+    @RequestMapping(value="/delAdmin")
+    public String addAdmin(@RequestParam("ids") String ids, HttpServletResponse response)throws Exception{
+
+//        int result = adminService.deleteFromPrimaryKey(ids);
+//
+//        if (result>0){
+//            response.getWriter().write("success");
+//        }else {
+//            response.getWriter().write("fail");
+//        }
+        return null;
+    }
 
 
 

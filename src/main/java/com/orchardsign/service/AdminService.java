@@ -27,5 +27,11 @@ public interface AdminService {
     /**跟进ID查询管理员**/
     Admin selectByPrimaryKey(Integer id);
 
+    /**添加管理员**/
+    int insertSelective(Admin admin);
+
+    /**删除管理员**/
+    int deleteFromPrimaryKey(String ids);
+
 
 }

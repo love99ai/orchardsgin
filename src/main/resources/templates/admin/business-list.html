@@ -34,7 +34,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="请输入商家名称" id="uname" name=""/>
 		<button type="submit" class="btn btn-success" id="search" name=""><i class="Hui-iconfont">&#xe665;</i> 搜商户</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','admin-add.html','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加商户</a></span>  </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加商户','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加商户</a></span>  </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort ">
 		<thead>
@@ -58,7 +58,7 @@
 		<th:block th:each="vadmin,iterStat:${businessList}">
 
 			<tr class="text-c">
-				<td><input type="checkbox" value="1" name=""/></td>
+				<td><input type="checkbox" value="${vadmin.id}" name="checkedId"/></td>
 				<td th:text="${iterStat.index+1}"></td>
 				<td th:text="${vadmin.uname}"></td>
 				<td th:text="${vadmin.nickname}"></td>
@@ -72,12 +72,12 @@
 				<td class="td-manage"  th:if ="${vadmin.isenable==1}">
 					<a style="text-decoration:none" th:onclick="'javascript:admin_start_stop(this,'+${vadmin.id}+',0);'" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
 					<a title="编辑" href="javascript:;" th:onclick="'javascript:admin_edit('+${vadmin.id}+');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-					<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<a title="删除" href="javascript:;"  th:onclick="'javascript:admin_del(this,'+${vadmin.id}+');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 
 				<td class="td-manage" th:if ="${vadmin.isenable==0}">
 					<a style="text-decoration:none" th:onclick="'javascript:admin_start_stop(this,'+${vadmin.id}+',1);'" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
 					<a title="编辑" href="javascript:;" th:onclick="'javascript:admin_edit('+${vadmin.id}+');'"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-					<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<a title="删除" href="javascript:;" th:onclick="'javascript:admin_del(this,'+${vadmin.id}+');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 		</th:block>
 
@@ -117,16 +117,16 @@
 	h		弹出层高度（缺省调默认值）
 */
 /*管理员-增加*/
-function admin_add(title,url,w,h){
-	layer_show(title,"http://localhost:8080/admin/welcome",w,h);
+function admin_add(title,w,h){
+	layer_show(title,"/admin/addBusinessInit",w,h);
 }
 /*管理员-删除*/
 function admin_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
-			dataType: 'json',
+			url: '/admin/delAdmin',
+			data:{ids:id},
 			success: function(data){
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});
@@ -168,6 +168,20 @@ function admin_start_stop(obj,id,isEnable){
 
 	});
 }
+
+function datadel() {
+    
+
+}
+
+    function refresh() {
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.$('.btn-refresh').click();
+        parent.layer.close(index);
+
+
+    }
 
 ///*管理员-启用*/
 //function admin_start(obj,id){

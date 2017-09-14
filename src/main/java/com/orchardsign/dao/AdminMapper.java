@@ -26,4 +26,6 @@ public interface AdminMapper {
     Vadmin adminLogin(@Param("uName") String uName,@Param("uPwd") String uPwd);
     /**查询商家列表**/
     ArrayList<Vadmin>  selectBusiness();
+
+
 }
