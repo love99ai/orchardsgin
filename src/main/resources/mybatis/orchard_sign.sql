@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-09-13 18:08:30
+Date: 2017-09-14 18:03:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -81,6 +81,7 @@ CREATE TABLE `tb_admin` (
   `isEnable` int(1) NOT NULL DEFAULT '0' COMMENT '是否启用 1是：0否',
   `loginTime` datetime DEFAULT NULL COMMENT '登录时间',
   `loginIp` varchar(20) DEFAULT NULL COMMENT '登录Ip地址',
+  `phone` varchar(15) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`),
   UNIQUE KEY `u_name` (`uName`),
   KEY `admin_group` (`permission`),
@@ -90,8 +91,8 @@ CREATE TABLE `tb_admin` (
 -- ----------------------------
 -- Records of tb_admin
 -- ----------------------------
-INSERT INTO `tb_admin` VALUES ('1', '1', '总管', 'admin', '123456', '2017-09-05 00:00:00', '1', '2017-09-07 14:27:48', '');
-INSERT INTO `tb_admin` VALUES ('2', '2', 'TMD', 'shangjia', '123456', '2017-09-07 14:30:44', '1', null, null);
+INSERT INTO `tb_admin` VALUES ('1', '1', '总管', 'admin', '123456', '2017-09-05 00:00:00', '1', '2017-09-07 14:27:48', '', null);
+INSERT INTO `tb_admin` VALUES ('2', '2', '万达12', 'shanghu', '', '2017-09-07 14:30:44', '1', null, null, '15826183882');
 
 -- ----------------------------
 -- Table structure for `tb_admin_group`
@@ -115,7 +116,7 @@ INSERT INTO `tb_admin_group` VALUES ('2', '商家', null);
 -- View structure for `v_admin`
 -- ----------------------------
 DROP VIEW IF EXISTS `v_admin`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_admin` AS select `tb_admin`.`id` AS `id`,`tb_admin`.`permission` AS `permission`,`tb_admin`.`nickname` AS `nickname`,`tb_admin`.`uName` AS `uName`,`tb_admin`.`uPwd` AS `uPwd`,`tb_admin`.`createTime` AS `createTime`,`tb_admin`.`isEnable` AS `isEnable`,`tb_admin`.`loginTime` AS `loginTime`,`tb_admin`.`loginIp` AS `loginIp`,`tb_admin_group`.`groupName` AS `groupName` from (`tb_admin` join `tb_admin_group` on((`tb_admin_group`.`id` = `tb_admin`.`permission`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_admin` AS select `tb_admin`.`id` AS `id`,`tb_admin`.`permission` AS `permission`,`tb_admin`.`nickname` AS `nickname`,`tb_admin`.`uName` AS `uName`,`tb_admin`.`uPwd` AS `uPwd`,`tb_admin`.`createTime` AS `createTime`,`tb_admin`.`isEnable` AS `isEnable`,`tb_admin`.`loginTime` AS `loginTime`,`tb_admin`.`loginIp` AS `loginIp`,`tb_admin`.`phone` AS `phone`,`tb_admin_group`.`groupName` AS `groupName` from (`tb_admin` join `tb_admin_group` on((`tb_admin_group`.`id` = `tb_admin`.`permission`)));
 
 -- ----------------------------
 -- View structure for `v_role_rights`
