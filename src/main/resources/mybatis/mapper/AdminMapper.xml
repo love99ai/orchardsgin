@@ -173,10 +173,12 @@
 
   </select>
 
-  <select id="selectBusiness" parameterType="com.orchardsign.entity.Vadmin" resultMap="BaseResultMapV">
+
+
+  <select id="selectBusiness" parameterType="java.lang.String" resultMap="BaseResultMapV">
     SELECT *
     FROM v_admin AS v
-    WHERE  permission = 2
+    WHERE  permission = 2 AND nickname LIKE CONCAT('%',#{nickname},'%' )
 
   </select>
 

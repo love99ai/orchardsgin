@@ -47,8 +47,8 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public ArrayList<Vadmin> selectBusiness() {
-        return adminMapper.selectBusiness();
+    public ArrayList<Vadmin> selectBusiness(String nickName) {
+        return adminMapper.selectBusiness(nickName);
     }
 
     @Override

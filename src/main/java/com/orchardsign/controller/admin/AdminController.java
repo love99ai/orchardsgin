@@ -144,8 +144,12 @@ public class AdminController {
     }
     /**商家列表**/
     @RequestMapping(value="/business")
-    public String businessList(Model model,HttpServletRequest request){
-        model.addAttribute("businessList", adminService.selectBusiness());
+    public String businessList( Model model,HttpServletRequest request){
+       String nickName =  request.getParameter("nickName");
+        if (nickName == null){
+            nickName = "";
+        }
+        model.addAttribute("businessList", adminService.selectBusiness(nickName));
         return "admin/business-list";
 
     }
@@ -237,13 +241,13 @@ public class AdminController {
     @RequestMapping(value="/delAdmin")
     public String addAdmin(@RequestParam("ids") String ids, HttpServletResponse response)throws Exception{
 
-//        int result = adminService.deleteFromPrimaryKey(ids);
-//
-//        if (result>0){
-//            response.getWriter().write("success");
-//        }else {
-//            response.getWriter().write("fail");
-//        }
+        int result = adminService.deleteFromPrimaryKey(ids);
+
+        if (result>0){
+            response.getWriter().write("success");
+        }else {
+            response.getWriter().write("fail");
+        }
         return null;
     }
 

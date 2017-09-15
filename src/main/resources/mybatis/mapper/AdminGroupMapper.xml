@@ -75,4 +75,5 @@
     from tb_admin_group
     where id != 2
   </select>
+
 </mapper>

@@ -31,7 +31,7 @@
 		<!--<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;"/>-->
 		<!-- - -->
 		<!--<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;"/>-->
-		<input type="text" class="input-text" style="width:250px" placeholder="请输入商家名称" id="uname" name=""/>
+		<input type="text" class="input-text" style="width:250px" placeholder="请输入商家名称" id="searchName" name="searchName"/>
 		<button type="submit" class="btn btn-success" id="search" name=""><i class="Hui-iconfont">&#xe665;</i> 搜商户</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加商户','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加商户</a></span>  </div>
@@ -58,7 +58,7 @@
 		<th:block th:each="vadmin,iterStat:${businessList}">
 
 			<tr class="text-c">
-				<td><input type="checkbox" value="${vadmin.id}" name="checkedId"/></td>
+				<td><input type="checkbox" th:value="${vadmin.id}" name="checkedId"/></td>
 				<td th:text="${iterStat.index+1}"></td>
 				<td th:text="${vadmin.uname}"></td>
 				<td th:text="${vadmin.nickname}"></td>
@@ -108,6 +108,12 @@
             {"orderable":false,"aTargets":[0,8]}// 不参与排序的列
         ]
     });
+
+
+    $("#search").click(function () {
+		window.location = "/admin/business?nickName=" +$("#searchName").val();
+    });
+
 /*
 	参数解释：
 	title	标题
@@ -168,19 +174,42 @@ function admin_start_stop(obj,id,isEnable){
 
 	});
 }
+	/**删除多条数据**/
+	function datadel() {
+        var checkedNum = $("input[name='checkedId']:checked");
+        if(checkedNum.length == 0) {
+            layer.msg('请选择要删除的商户!',{icon: 5,time:2000});
+            return;
+        }
+        var ids ='';
+        checkedNum.each(function () {
+            if (ids==''){
+                ids = $(this).val();
+			}else {
+                ids = ids + ","+$(this).val();
+			}
 
-function datadel() {
-    
+        });
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: 'POST',
+                url: '/admin/delAdmin',
+                data:{ids:ids},
+                success: function(data){
+                    layer.msg('已删除!',{icon:1,time:1000});
+                    setTimeout("refresh()",1000);
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+        });
 
-}
+
+    }
 
     function refresh() {
-
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.$('.btn-refresh').click();
-        parent.layer.close(index);
-
-
+        $('.btn-refresh').click();
     }
 
 ///*管理员-启用*/

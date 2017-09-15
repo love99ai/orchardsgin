@@ -19,7 +19,7 @@ public interface AdminService {
     UtilJson adminLogin(String uName, String uPwd);
 
     /**查询商家列表**/
-    ArrayList<Vadmin> selectBusiness();
+    ArrayList<Vadmin> selectBusiness(String nickName);
 
     /**修改管理员**/
     int updateByPrimaryKeySelective(Admin admin);

@@ -16,6 +16,6 @@ public interface AdminGroupMapper {
     int updateByPrimaryKeySelective(AdminGroup record);
 
     int updateByPrimaryKey(AdminGroup record);
-
+    /**查询所有角色不等于商家的**/
     ArrayList<AdminGroup> selectAll();
 }

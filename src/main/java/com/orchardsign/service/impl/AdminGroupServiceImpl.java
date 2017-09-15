@@ -26,4 +26,37 @@ public class AdminGroupServiceImpl implements AdminGroupSerice
     public ArrayList<AdminGroup> selectAll() {
         return adminMapper.selectAll();
     }
+
+    @Override
+    public AdminGroup selectByPrimaryKey(Integer id) {
+        return adminMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int insertSelective(AdminGroup adminGroup) {
+
+        if (adminGroup.getId() == null){
+            return adminMapper.insertSelective(adminGroup);
+        }else {
+            return adminMapper.updateByPrimaryKeySelective(adminGroup);
+        }
+
+
+    }
+
+    @Override
+    public int deleteFromPrimaryKey(String ids) {
+        String []idArr = ids.split(",");
+        int result = 0;
+        for (String id:idArr){
+            adminMapper.deleteByPrimaryKey(Integer.parseInt(id));
+        }
+
+        return result;
+    }
+
+//    @Override
+//    public int updateByPrimaryKeySelective(AdminGroup adminGroup) {
+//        return adminMapper.updateByPrimaryKeySelective(adminGroup);
+//    }
 }

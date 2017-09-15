@@ -3,6 +3,7 @@ package com.orchardsign.dao;
 import com.orchardsign.entity.Admin;
 import com.orchardsign.entity.Vadmin;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,9 @@ public interface AdminMapper {
 
     /**用户登录信息**/
     Vadmin adminLogin(@Param("uName") String uName,@Param("uPwd") String uPwd);
-    /**查询商家列表**/
-    ArrayList<Vadmin>  selectBusiness();
+    /**跟进昵称查询商家列表**/
+    ArrayList<Vadmin>  selectBusiness(@RequestParam("nickname") String nickname);
+
 
 
 }
