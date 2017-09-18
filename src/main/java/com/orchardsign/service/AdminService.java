@@ -33,5 +33,8 @@ public interface AdminService {
     /**删除管理员**/
     int deleteFromPrimaryKey(String ids);
 
+    /**查询管理员列表**/
+    ArrayList<Vadmin> selectAdmin(String nickName);
+
 
 }

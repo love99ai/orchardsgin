@@ -28,6 +28,7 @@ public interface AdminMapper {
     /**跟进昵称查询商家列表**/
     ArrayList<Vadmin>  selectBusiness(@RequestParam("nickname") String nickname);
 
-
+    /**跟进昵称查询管理员列表**/
+    ArrayList<Vadmin> selectAdmin(@RequestParam("nickname") String nickname);
 
 }

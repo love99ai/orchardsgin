@@ -173,16 +173,17 @@ public class AdminController {
     @RequestMapping(value="/editAdminInit")
     public String editAdminInit(@RequestParam("id") int id,Model model){
         Admin admin = adminService.selectByPrimaryKey(id);
-
+        model.addAttribute("admin",adminService.selectByPrimaryKey(id));
+        Gson gson = new Gson();
+        logger.info(gson.toJson(admin));
         if (admin.getPermission()==2){
             //商家
-            model.addAttribute("admin",adminService.selectByPrimaryKey(id));
             return "admin/business-edit";
         }else {
             //管理员
+            model.addAttribute("groups",adminGroupSerice.selectAll());
+            return "admin/admin-add";
         }
-
-        return null;
 
     }
     /**编辑管理员**/
@@ -205,9 +206,8 @@ public class AdminController {
     /**初始化添加管理员**/
     @RequestMapping(value="/addAdminInit")
     public String addAdminInit(Model model){
-
+        model.addAttribute("admin",new Admin());
         model.addAttribute("groups",adminGroupSerice.selectAll());
-
         return "admin/admin-add";
 
     }
@@ -219,13 +219,26 @@ public class AdminController {
 
     }
 
-    /**添加管理员、商家**/
+    /**添加/修改管理员、商家**/
     @RequestMapping(value="/addAdmin")
     public String addAdmin(@ModelAttribute("admin") Admin admin, HttpServletResponse response)throws Exception{
 
-        admin.setCreatetime(DateUtil.stampToDate(Calendar.getInstance().getTimeInMillis()));
-        admin.setIsenable(1);
-        int result = adminService.insertSelective(admin);
+        Gson gson = new Gson();
+        logger.info(gson.toJson(admin));
+        int result =0;
+        if (admin.getId()== null ){
+            //添加
+            admin.setCreatetime(DateUtil.stampToDate(Calendar.getInstance().getTimeInMillis()));
+            admin.setIsenable(1);
+            result = adminService.insertSelective(admin);
+        }else {
+            //修改
+            if (admin.getUpwd().equals("")){
+                admin.setUpwd(null);
+            }
+            result = adminService.updateByPrimaryKeySelective(admin);
+        }
+
 
 //        Gson gson = new Gson();
 //        System.out.print(gson.toJson(admin) );
@@ -249,6 +262,19 @@ public class AdminController {
             response.getWriter().write("fail");
         }
         return null;
+    }
+
+
+    /**管理员列表**/
+    @RequestMapping(value="/list")
+    public String adminList( Model model,HttpServletRequest request){
+        String nickName =  request.getParameter("nickName");
+        if (nickName == null){
+            nickName = "";
+        }
+        model.addAttribute("businessList", adminService.selectAdmin(nickName));
+        return "admin/admin-list";
+
     }
 
 

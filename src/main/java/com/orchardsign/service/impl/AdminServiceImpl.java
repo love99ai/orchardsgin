@@ -77,4 +77,9 @@ public class AdminServiceImpl implements AdminService {
 
         return result;
     }
+
+    @Override
+    public ArrayList<Vadmin> selectAdmin(String nickName) {
+        return adminMapper.selectAdmin(nickName);
+    }
 }
